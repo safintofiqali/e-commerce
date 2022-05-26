@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import Directory from "../../components/directory/Directory.comp";
 
 const Home = (props) => {
@@ -28,7 +29,12 @@ const Home = (props) => {
       imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
     },
   ];
-  return <Directory categories={categories} />;
+  return (
+    <>
+      <Outlet />
+      <Directory categories={categories} />
+    </>
+  );
 };
 
 export default Home;
