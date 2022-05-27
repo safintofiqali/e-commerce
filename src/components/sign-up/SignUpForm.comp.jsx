@@ -29,12 +29,11 @@ const SignUpForm = () => {
         email,
         password
       );
-
       await createUserDocumentFromAuth(user, { displayName });
 
       console.log(user);
     } catch (err) {
-      console.log(err);
+      console.log("Cannot login ", err);
     }
 
     resetFields();
