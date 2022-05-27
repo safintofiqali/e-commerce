@@ -1,14 +1,19 @@
-import {
-  signInWithGooglePopup,
-  createUserDocumentFromAuth,
-} from "../../utils/firebase/firebase.utils";
-import SignUpForm from "../../components/sign-up/SignUpForm.comp";
-import SignInForm from "../../components/sign-in/SingIn.comp";
+/* IMPORT : STYLES */
+import "./authentication.styles.scss";
+/* IMPORT : COMPONENTS */
+import SignUpForm from "../../components/sign-up-form/SignUpForm.comp";
+import SignInForm from "../../components/sing-in-form/SignInForm.comp";
+
+/* RENDER COMPONENT - STARTS */
 const Authentication = () => {
+  // RETURN ELEMENTS - AREA
   return (
     <div>
-      <SignInForm />
-      <SignUpForm />
+      <h1>Authentication Page</h1>
+      <div className="auth-container">
+        <SignInForm />
+        <SignUpForm />
+      </div>
     </div>
   );
 };

@@ -1,15 +1,13 @@
+/* IMPORT STYLES */
 import "./form-input.styles.scss";
-const FormInput = ({ label, ...otherProps }) => {
+
+/* RENDER COMPONENT */
+const FormInput = ({ label, additionalProps }) => {
+  // RETURN ELEMENTS - AREA
   return (
     <div className="group">
-      <input className="form-input " {...otherProps} />
-      <label
-        className={`${
-          otherProps.value.length ? "shrink" : ""
-        } form-input-label`}
-      >
-        {label}
-      </label>
+      <input {...additionalProps} className="form-input" />
+      {label && <label className={`${additionalProps.value.length ? "shrink" : null} form-input-label`}>{label}</label>}
     </div>
   );
 };

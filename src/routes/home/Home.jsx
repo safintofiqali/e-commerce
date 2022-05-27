@@ -1,7 +1,12 @@
+/* IMPORT : LIBRARIES */
 import { Outlet } from "react-router-dom";
+
+/* IMPORT : COMPONENTS */
 import Directory from "../../components/directory/Directory.comp";
 
+/* RENDER COMPONENT - STARTS */
 const Home = (props) => {
+  // HARD CODED VARIABLES/DATA
   const categories = [
     {
       id: 1,
@@ -29,6 +34,8 @@ const Home = (props) => {
       imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
     },
   ];
+
+  // RETURN ELEMENTS - AREA
   return (
     <>
       <Outlet />

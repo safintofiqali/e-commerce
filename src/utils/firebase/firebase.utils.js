@@ -1,76 +1,54 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// Firebase sub-library related to authentication
-import {
-  getAuth,
-  signInWithRedirect,
-  signInWithPopup,
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 
-// Firestore sub-library. doc is to access the documents. getDoc, however, is to set the data of a specific doc, setDoc is to set the data of a specific doc.
+// IMPORT NECESSARY TOOLS FROM GOOGLE AUTH
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
+
+// IMPORT NECESSARY TOOLS FROM FIRESTORE
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBX0OlTJA8FkDSUXL5pT6wZzl_CsP3hSb4",
-  authDomain: "crwn-clothing-db-8e7ad.firebaseapp.com",
-  projectId: "crwn-clothing-db-8e7ad",
-  storageBucket: "crwn-clothing-db-8e7ad.appspot.com",
-  messagingSenderId: "945984912693",
-  appId: "1:945984912693:web:78a83fd91c24925a2b607c",
+  apiKey: "AIzaSyATAnhl_tOijLOsVagdUbdyqLk-bY9AF7g",
+  authDomain: "firste-commerce.firebaseapp.com",
+  projectId: "firste-commerce",
+  storageBucket: "firste-commerce.appspot.com",
+  messagingSenderId: "768674463736",
+  appId: "1:768674463736:web:fd5966fa8b4e4a0316a00d",
 };
 
 // Initialize Firebase
-// this 'firebaseApp' variable is an instance of the firebase that link these codes to the instance we created on the firebase.google.com
-//  the link with the firestore, crud operation, and authentication will be done through this instance
 const firebaseApp = initializeApp(firebaseConfig);
 
-// We need a provider in order to be able to use the google authentication feature.
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
+// USE THE TOOLS IMPORTED FROM AUTH SERVICE
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => {
-  return signInWithPopup(auth, provider);
-};
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 
+// USE THE TOOLS IMPORTED FROM FIRESTORE
 export const db = getFirestore();
-export const createUserDocumentFromAuth = async (
-  userAuth,
-  additionalInformation = {}
-) => {
-  const userDocRef = doc(db, "users", userAuth.uid);
-  const userSnapshot = await getDoc(userDocRef);
 
+// CREATE USER AND STORE IT IN FIRESTORE - USING THE SIGN IN WITH GOOGLE POPUP
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+
+  const userSnapshot = await getDoc(userDocRef);
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
-
     try {
-      await setDoc(userDocRef, {
-        displayName,
-        email,
-        createdAt,
-        ...additionalInformation,
-      });
+      await setDoc(userDocRef, { displayName, email, createdAt, ...additionalInformation });
     } catch (err) {
       console.log(err);
     }
   }
-
-  return userDocRef;
 };
 
+// CREATE USER WITH EMAIL AND PASSWORD
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
   return await createUserWithEmailAndPassword(auth, email, password);
-};
-
-export const signInAuthUserWithEmailAndPassword = async (email, password) => {
-  if (!email || !password) return;
-  return await signInWithEmailAndPassword(auth, email, password);
 };
