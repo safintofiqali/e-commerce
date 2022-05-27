@@ -6,6 +6,10 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+
+// Firestore sub-library. doc is to access the documents. getDoc, however, is to set the data of a specific doc, setDoc is to set the data of a specific doc.
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBX0OlTJA8FkDSUXL5pT6wZzl_CsP3hSb4",
@@ -30,4 +34,23 @@ provider.setCustomParameters({
 export const auth = getAuth();
 export const signInWithGooglePopup = () => {
   return signInWithPopup(auth, provider);
+};
+
+export const db = getFirestore();
+export const createUserDocumentFromAuth = async (userAuth) => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+  const userSnapshot = await getDoc(userDocRef);
+
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await setDoc(userDocRef, { displayName, email, createdAt });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return userDocRef;
 };
