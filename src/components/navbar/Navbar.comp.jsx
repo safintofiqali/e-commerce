@@ -1,6 +1,9 @@
 /* IMPORT : LIBRARIES */
 import { Link, Outlet } from "react-router-dom";
+import { useContext } from "react";
 
+/* IMPORT CONTEXTS */
+import { UserContext } from "../../contexts/user.context";
 /* IMPORT : STYLES */
 import "./navbar.styles.scss";
 
@@ -9,6 +12,7 @@ import { ReactComponent as Logo } from "../../assets/logo/logo.svg";
 
 /* RENDER COMPONENT - STARTS */
 const Navbar = (props) => {
+  const { currentUser } = useContext(UserContext);
   // RETURN ELEMENTS - AREA
   return (
     <>
