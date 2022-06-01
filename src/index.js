@@ -4,16 +4,16 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import UserContextProvider from "./contexts/user.context";
 
 /* IMPORT CONTEXTS */
-import { UserProvider } from "./contexts/user.context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <UserProvider>
+    <UserContextProvider>
       <App />
-    </UserProvider>
+    </UserContextProvider>
   </BrowserRouter>
 );
 

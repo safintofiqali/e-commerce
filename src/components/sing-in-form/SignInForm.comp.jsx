@@ -1,5 +1,5 @@
 /* IMPORT LIBRARIES */
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 /* IMPORT COMPONENTS */
 import FormInput from "../form-input/FormInput.comp";
@@ -7,9 +7,6 @@ import Button from "../button/Button.comp";
 
 /* IMPORT : UTILITIES */
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
-
-/* IMPORT CONTEXTS */
-import { UserContext } from "../../contexts/user.context";
 
 /* DECLARE VARIABLES/DATA */
 const defaultFormFields = {
@@ -20,18 +17,15 @@ const defaultFormFields = {
 const SignInForm = () => {
   // SIGN IN WITH GOOGLE - FUNCTION
   const googlePopupSignIn = async () => {
-    const { user } = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
 
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  const { setCurrentUser } = useContext(UserContext);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
-    console.log(name, value);
   };
 
   const handleSubmit = async (event) => {
@@ -39,7 +33,6 @@ const SignInForm = () => {
 
     try {
       const { user } = await signInAuthUserWithEmailAndPassword(email, password);
-      setCurrentUser(user);
     } catch (err) {
       console.log(err);
     }

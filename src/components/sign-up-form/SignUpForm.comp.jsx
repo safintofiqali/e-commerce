@@ -1,5 +1,5 @@
 /* IMPORT LIBRARIES */
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import Button from "../button/Button.comp";
 

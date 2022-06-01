@@ -1,9 +1,11 @@
 /* IMPORT : LIBRARIES */
 import { Link, Outlet } from "react-router-dom";
 import { useContext } from "react";
+import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 /* IMPORT CONTEXTS */
 import { UserContext } from "../../contexts/user.context";
+
 /* IMPORT : STYLES */
 import "./navbar.styles.scss";
 
@@ -12,7 +14,9 @@ import { ReactComponent as Logo } from "../../assets/logo/logo.svg";
 
 /* RENDER COMPONENT - STARTS */
 const Navbar = (props) => {
-  const { currentUser } = useContext(UserContext);
+  const { userAuth } = useContext(UserContext);
+
+  console.log(userAuth);
   // RETURN ELEMENTS - AREA
   return (
     <>
@@ -27,9 +31,15 @@ const Navbar = (props) => {
           <Link className="nav-link" to="/shop">
             Shop
           </Link>
-          <Link className="nav-link" to="/authentication">
-            Sign In
-          </Link>
+          {userAuth ? (
+            <span className="nav-link" onClick={signOutUser}>
+              Sign Out
+            </span>
+          ) : (
+            <Link className="nav-link" to="/authentication">
+              Sign In
+            </Link>
+          )}
         </div>
       </nav>
       <Outlet />
